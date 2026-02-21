@@ -1,0 +1,38 @@
+from tkinter import *
+
+root = Tk()
+root.geometry("400x400")
+root.title("Food Delivery App")
+root.config(background = "black")
+
+email_label = Label(root, text = "Email: ", bg="Blue", fg ="sky blue", font = 12)
+email_label.place(x = 20, y = 50)
+
+password = Label(root, text = "Password:  ", bg = "red", fg = "orange", font = 12)
+password.place(x = 20, y = 100)
+
+email_input = Entry(root,width = 40)
+email_input.place(x = 150, y = 50)
+
+password_input  = Entry(root, width = 40, show = "*")
+password_input.place(x = 150, y = 100)
+
+food_name = Label(root, text = "what food would you like: ")
+food_name.place(x = 20, y = 200)
+
+food_input = Entry(root, width = 30)
+food_input.place(x = 180, y = 200)
+
+options_1 = ["jam sandwitch", "cheese sandwitch", "ham sandwitch", "pizza", "fries", "burger"]
+spinbox_food = Spinbox(root, values = options_1, state= "readonly", wrap = True)
+spinbox_food.place(x = 200, y = 250)
+
+drinks = Label(root,text = "choose a drink")
+drinks.place(x = 20, y = 300)
+drink_options = ["cola","pepsi", "Fanta", "Iron Bru", "Mountain Due", "Water"]
+drink_spinbox = Spinbox(root,values = drink_options, state = "readonly", wrap = True)
+drink_spinbox.place(x = 200, y = 300)
+
+submit_button = Button(root, text = "Submit", fg = "orange", bg= "yellow", command = root.destroy)
+submit_button.place(x = 200, y = 350)
+root.mainloop()
