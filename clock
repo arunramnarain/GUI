@@ -1,0 +1,21 @@
+from tkinter import *
+import random
+from tkinter.ttk import *
+from time import strftime # gets system time
+
+root = Tk()
+root.geometry("870x200")
+root.title("clock")
+
+def time():
+    string = strftime("%H: %M: %S %p %b %a")
+    label_1.config(text = string)
+    label_1.after(1000, time)
+
+
+label_1 = Label(root, font = ("calibri", 90, "bold"), background = "green", foreground = "yellow")
+label_1.pack(anchor = "center")
+
+time()
+
+root.mainloop()
