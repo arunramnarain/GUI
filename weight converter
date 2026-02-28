@@ -1,0 +1,52 @@
+from  tkinter import *
+
+root = Tk()
+root.geometry("500x200")
+root.title("weight converter")
+root.config(bg = "green")
+
+def convert_from_Kg():
+    gram = float(e_2value.get()) * 10000
+    pound = float(e_2value.get()) * 2.20462
+    ounce = float(e_2value.get()) * 35.274
+
+    t_1.delete("1.0", END)
+    t_1.insert(END, gram)
+
+    t_2.delete("1.0", END)
+    t_2.insert(END, pound)
+
+    t_3.delete("1.0", END)
+    t_3.insert(END, ounce)
+
+#create the widgets
+e_1 = Label(root, text = "Enter the weght in Kg", bg = "green")
+e_2value = StringVar()
+e_2 = Entry(root, textvariable = e_2value)
+e_3 = Label(root, text = "Grams", bg = "green")
+e_4 = Label(root, text = "Pounds", bg = "green")
+e_5 = Label(root, text = "Ounce", bg = "green")
+
+t_1 = Text(root, height = 1, width = 20)
+t_2 = Text(root, height = 1, width = 20)
+t_3 = Text(root, height = 1, width = 20)
+
+# button
+br = Button(root,text = "covert",command = convert_from_Kg, fg = "blue", bg = "orange", bd = 5)
+
+#adding everything to the screen
+
+e_1.grid(row = 0, column = 0)
+e_2.grid(row = 0, column = 1)
+e_3.grid(row = 3, column = 0)
+e_4.grid(row = 3, column = 1)
+e_5.grid(row = 3, column = 2)
+t_1.grid(row = 4, column = 0)
+t_2.grid(row = 4, column = 1)
+t_3.grid(row = 4, column = 2)
+br.grid(row = 0,column=2)
+
+
+
+
+root.mainloop()
