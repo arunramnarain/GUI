@@ -1,0 +1,14 @@
+from tkinter import *
+import math
+import random
+import tkinter.messagebox
+
+root = Tk()
+root.minsize(350,260)
+root.title("guessing game")
+root.config(bg = "Red")
+
+num = random.randint(1, 20)
+
+welcome = Label(root, bg  = "red", text = "welcome to the guessing game")
+welcome.pack()
