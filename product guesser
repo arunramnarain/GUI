@@ -1,0 +1,60 @@
+from tkinter import *
+import random
+import math
+import tkinter.messagebox
+
+root = Tk()
+
+root.minsize(500,120)
+root.title("Guess the number game")
+root.config(bg = "Black")
+
+num_v = random.randint(1,12) # v for visible
+
+num_h = random.randint(1,20) # h for hidden
+
+
+def check_num():
+    user_guess = int(guess_input.get())
+    if user_guess/num_h > num_v:
+        tkinter.messagebox.showinfo("HIGH", "Your guess is too high")
+
+    elif user_guess/num_h < num_v:
+        tkinter.messagebox.showinfo("LOW", "Your guess is too low.")
+
+    elif user_guess/num_h == num_v:
+        tkinter.messagebox.showinfo("CORRECT", "That is the correct number!")
+
+
+def button_confirm():
+    user_name = name_input.get()
+    tkinter.messagebox.showinfo("Welcome","Hi " + user_name + 
+                                " One of the numbers is " + str(num_v) + " Guess the other number")
+
+# GUI
+
+welcome = Label(root, text = "Welcome to the guessing game: ", bg = "Black", fg = "White")
+welcome.pack()
+
+name = Label(root, text = "What us your name: ",bg = "yellow")
+name.place(x = 50, y = 30)
+
+guess = Label(root, text = "What is your guess, from " + str(num_v) + " to " + str(num_v * 20), bg = "Yellow")
+guess.place(x = 50, y = 75)
+
+name_input = Entry(root)
+name_input.place(x = 250, y = 30)
+
+ok = Button(root, text = "ok", command = button_confirm)
+ok.place(x = 400, y = 30)
+
+guess_input = Entry(root)
+guess_input.place(x = 250, y = 75)
+
+submit_button = Button(root, text = "Submit", command = check_num)
+submit_button.place(x = 400, y = 75)
+
+
+
+
+root.mainloop()
