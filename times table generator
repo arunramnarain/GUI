@@ -1,0 +1,70 @@
+from tkinter import *
+from tkinter.ttk import *
+import tkinter
+
+root = Tk()
+root.minsize(500,500)
+root.config(bg = "green")
+root.title("Mathmatical table generator")
+
+title  = tkinter.Label(root, bg = "yellow", text = "mathematical table")
+title.grid(row = 1, column = 4, pady = 15)
+
+caption = tkinter.Label(root, text = "Number and range: ",
+                         bg = "lightblue", fg = "black", font = ("Ariel", 12))
+caption.grid(row = 2, column = 2, pady= 20)
+
+# combo box creation
+
+theNum = IntVar()
+
+numbers = Combobox(root, textvariable = theNum, width = 5)
+numbers.grid(row = 2, column = 4)
+
+numbers["values"] = tuple(range(0,51))
+
+# radio buttons
+
+endVal = IntVar()
+
+r10 = Radiobutton(root, text = "10", variable = endVal, value = 10)
+r20 = Radiobutton(root, text = "20", variable = endVal, value = 20)
+r30 = Radiobutton(root, text = "30", variable = endVal, value = 30)
+r40 = Radiobutton(root, text = "40", variable = endVal, value = 40)
+r50 = Radiobutton(root, text = "50", variable = endVal, value = 50)
+
+r10.grid(row = 3, column = 5)
+r20.grid(row = 4, column = 5)
+r30.grid(row = 5, column = 5)
+r40.grid(row = 6, column = 5)
+r50.grid(row = 7, column = 5)
+
+def generate_multiplication_table():
+    tables = ""
+    for i in range(1, endVal.get()+1):
+        tables += str(theNum.get()) + " x " + str(i) + " = " + str(theNum.get()*i) + "\n"
+    table.configure(text = tables)
+
+
+table = tkinter.Label(root, anchor = "center")
+table.grid(row = 12, column = 2, pady = 10)
+
+
+
+
+
+
+
+
+
+
+
+
+generate_table = tkinter.Button(root, text = "generate table", bd = 4, 
+                                bg = "yellow", fg = "Blue", command = generate_multiplication_table)
+
+generate_table.grid(row = 10, column = 3, pady= 30)
+
+
+
+root.mainloop()
