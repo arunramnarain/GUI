@@ -44,11 +44,11 @@ def get_text(i, j ,gb ,l1 , l2):
             box = messagebox.showinfo("Winner", "PLayer 1 won the match")
         
         elif winner(board, "O"):
-            gb.destroy
+            gb.destroy()
             box = messagebox.showinfo("Winner", "Player 2 won the game")
         
         elif is_full():
-            gb.destroy
+            gb.destroy()
             box = messagebox.showinfo("Tie", "It's a tie")
 
 def is_free(i,j):
@@ -64,18 +64,112 @@ def is_full():
 
 #creating  the GUI for 2 player
 def gameboard_pl(game_board, l1, l2):
-    global Button
+    global button
     button = []
+
     for i in range(3):
-        m = 3+ i
+        m = 3 + i
         button.append(i)
         button[i] = []
+
         for j in range(3):
             n = j
             button[i].append(j)
 
             get_t = partial(get_text, i , j , game_board, l1, l2)
-            button = Button(game_board, bd = 5, bg = "green", fg = "yellow", 
-                            command = get_t, height = 34, width = 8)
+            button[i][j] = Button(game_board, bd = 5, bg = "green", fg = "yellow", 
+                            command = get_t, height = 4, width = 8)
             button[i][j].grid(row = m, column = n)
+
     game_board.mainloop()
+
+#single player with pc
+def pc():
+    possiblemove = []
+    for i in range(len(board)):
+        for j in range(len(board[i])):
+            if board[i][j] == " ":
+                possiblemove.append([i,j])
+    move = []
+    if possiblemove == []:
+        return
+    
+    else:
+        for let in ["O", "X"]:
+            for i in possiblemove:
+                boardcopy = deepcopy(board)
+                boardcopy[i[0]][i[1]] = let
+                if winner(boardcopy, let):
+                    return i
+    corner = []
+
+    for i in possiblemove:
+        if i in [[0,0], [2,0], [2,2], [0,2]]:
+            corner.append(i)
+    if len(corner) > 0:
+        random.randint(0,len(corner) - 1)
+        return corner[move]
+    
+    edge = []
+    for i in possiblemove:
+        if i in [[1,0],[0,1],[2,1],[1,2]]:
+            edge.append(i)
+    if len(edge) > 0:
+        random.randint(0, len(corner) - 1)
+        return edge[move]
+    
+
+
+
+
+def with_player(game_board):
+    game_board.destroy()
+    game_board = Tk()
+    game_board.title("Game Board")
+    game_board.geometry("225x300")
+
+    l1 = Button(game_board, text = "Player 1: X", width = 10, bg = "blue", fg = "yellow")
+    l1.grid(row = 1, column = 1)
+
+    l2 = Button(game_board, text = "Player 2: O", width = 10, bg = "blue", fg = "yellow", state = DISABLED)
+    l2.grid(row = 2, column  = 1)
+
+    gameboard_pl(game_board, l1, l2)
+
+# main function
+
+def Play():
+    menu = Tk()
+    menu.geometry("500x500")
+    menu.title("Tic Tac Toe Game")
+    wpl = partial(with_player, menu)
+    head = Button(menu, text = "Welcome to the Tic Tac Toe game", 
+                  activeforeground = "Black", activebackground = "Orange", 
+                  fg = "Light Blue", bg = "White", width = 500, font = "summer", bd = 5)
+    head.pack(side = "top")
+
+
+
+
+    b1 = Button(menu, text = "single player", activebackground = "Orange", 
+                activeforeground = "Black", fg = "Light Blue", bg = "White",
+                  font = "summer", bd = 5, command = None, width = 500)
+    b1.pack(side = "top")
+    
+    b2 = Button(menu, text = "2 player", activebackground = "Orange", 
+                activeforeground = "Black", fg = "Light Blue", bg = "White",
+                  font = "summer", bd = 5, command = wpl, width = 500)
+    b2.pack(side = "top")
+
+    b3 = Button(menu, text = "Exit", activebackground = "Orange", 
+                activeforeground = "Black", fg = "Light Blue", bg = "White",
+                  font = "summer", bd = 5, command = menu.quit, width = 500)
+    b3.pack(side = "top")
+
+    menu.mainloop()
+
+#Call main function, if 
+if __name__ == "__main__":
+    Play()
+
+    
