@@ -118,11 +118,88 @@ def pc():
         random.randint(0, len(corner) - 1)
         return edge[move]
     
+    
+def get_text_pc(i,j,gb,l1,l2): # configuring text on button while playiing with pc
+    global sign
+    if board[i][j] == " ":
+        if sign%2 == 0:
+            l1.config(state = DISABLED)
+            l2.config(state = ACTIVE)
+            board[i][j] = "X"
+        
+        else:
+            button[i][j].config(state = ACTIVE)
+            l1.config(state = ACTIVE)
+            l2.config(state = DISABLED)
+            board[i][j] = "O"
+        
+        sign += 1
+
+        button[i][j].config(text = board[i][j])
+    
+    x = True
+    if winner(board,"X"):
+        gb.destroy()
+        x = False
+        box = messagebox.showinfo("Winner", "Player Wins")
+    
+    elif winner(board, "O"):
+        gb.destroy()
+        x = False#
+        box = messagebox.showinfo("Winner", "Computer wins")
+
+    elif is_full():
+        gb.destroy()
+        x = False
+        box = messagebox.showinfo("Winner", "it's a tie")
+    
+    if x:
+        if sign%2 != 0:
+            move = pc()
+    
+            button[move[0]][move[1]].config(state = DISABLED)
+
+            get_text_pc(move[0], move[1],gb,l1,l2)
+
+#creating the gameboard setup for pc vs player
+
+def gameboard_pc(game_board, l1,l2):
+    global button
+    button = []
+
+    for i in range(3):
+        m = i + 3
+        button.append(i)
+        button[i] = []
+
+        for j in range(3):
+            n = j
+            button[i].append(j)
+            get_t  = partial(get_text_pc,i,j,game_board,l1,l2)
+
+            button[i][j] = Button(game_board,bd = 5, width = 6, height = 6,
+                                   bg = "light blue", fg = "Orange", command = get_t)
+            button[i][j].grid(row = m, column = n)
+    
+    game_board.mainloop()
+
+#initialising game board to play with pc
+
+def with_pc(game_board):
+    game_board.destroy()
+    game_board = Tk()
+    game_board.title("Tic toc game")
+
+    l1 = Button(game_board, text  = "Player 1: X", width = 10, bg = "blue", fg = "yellow")
+    l1.grid(row = 1, column = 1)
+
+    l2 = Button(game_board, text = "Computer: O", width = 10, bg = "blue", fg = "yellow", state = DISABLED)
+    l2.grid(row = 2, column  = 1)
+
+    gameboard_pc(game_board, l1, l2)
 
 
-
-
-def with_player(game_board):
+def with_player(game_board):# initialising game board to playe eith another player
     game_board.destroy()
     game_board = Tk()
     game_board.title("Game Board")
@@ -149,11 +226,11 @@ def Play():
     head.pack(side = "top")
 
 
-
+    wpc = partial(with_pc, menu)
 
     b1 = Button(menu, text = "single player", activebackground = "Orange", 
                 activeforeground = "Black", fg = "Light Blue", bg = "White",
-                  font = "summer", bd = 5, command = None, width = 500)
+                  font = "summer", bd = 5, command = wpc, width = 500)
     b1.pack(side = "top")
     
     b2 = Button(menu, text = "2 player", activebackground = "Orange", 
