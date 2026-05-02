@@ -1,0 +1,51 @@
+from tkinter import *
+from tkinter.ttk import *
+
+root = Tk()
+root.geometry("600x600")
+root.config(background = "White")
+
+title = Label(root, text = "My address book", background = "White")
+book_list = Listbox(root)
+
+open_b = Button(root, text = "Open", command = None)
+delete_b = Button(root, text = "Delete", command = None)
+save_b = Button(root, text = "Save", command = None)
+Edit_b = Button(root, text = "Edit", command = None)
+update = Button(root, text = "Update", command = None)
+
+name_l = Label(root, text = "Name:", background="White")
+address_l = Label(root, text = "Address:", background="White")
+mobile_l = Label(root, text = "Mobile:", background="White")
+phone_l = Label(root, text = "Phone:", background="White")
+birthday_l = Label(root, text = "Birthday:", background="White")
+
+name_E = Entry(root, background="White", width = 15)
+address_E = Entry(root, background="White", width = 15)
+mobile_E = Entry(root, background="White", width = 15)
+phone_E = Entry(root, background="White", width = 15)
+birthday_E = Entry(root, background="White", width = 15)
+
+title.grid(column = 1, row = 1, pady = 2, padx = 2)
+book_list.grid(column = 1, row = 2, columnspan = 3, rowspan = 6)
+
+Edit_b.grid(column = 1, row = 8, pady = 2, padx = 2)
+delete_b.grid(column = 2, row = 8, pady = 2, padx = 2)
+
+open_b.grid(column = 3, row = 1, pady = 2, padx = 2)
+name_l.grid(column = 3, row = 2, pady = 2, padx = 2)
+address_l.grid(column = 3, row = 3, pady = 2, padx = 2)
+mobile_l.grid(column = 3, row = 4, pady = 2, padx = 2)
+phone_l.grid(column = 3, row = 6, pady = 2, padx = 2)
+birthday_l.grid(column = 3, row = 7, pady = 2, padx = 2)
+
+save_b.grid(column = 3, row = 8, pady = 2, padx = 2)
+update.grid(column = 2, row = 9)
+
+name_E.grid(column = 3, row = 2, pady = 2, padx = 2)
+address_E.grid(column = 3, row = 3, pady = 2, padx = 2)
+mobile_l.grid(column = 3, row = 4, pady = 2, padx = 2)
+phone_l.grid(column = 3, row = 6, pady = 2, padx = 2)
+birthday_l.grid(column = 3, row = 7, pady = 2, padx = 2)
+
+root.mainloop()
