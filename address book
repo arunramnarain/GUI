@@ -1,29 +1,124 @@
 from tkinter import *
 from tkinter.ttk import *
+from tkinter import messagebox
+from tkinter.filedialog import *
+import os
+import json
 
 root = Tk()
-root.geometry("600x600")
+root.geometry("400x400")
 root.config(background = "White")
+root.title("Address Book")
+
+MyAddressBook = {}
+# clear the textbox on the main screen
+def clear_all():
+    name_E.delete(0, END)
+    address_E.delete(0,END)
+    mobile_E.delete(0, END)
+    email_E.delete(0,END)
+    birthday_E.delete(0,END)
+
+
+
+def update():
+    key = name_E.get()
+    if key  == "":
+        messagebox.showinfo("Error", text = "Name Cannot be empty")
+    else:
+        if key not in MyAddressBook.keys(): # to add a new entry into the booklist
+            book_list.insert(END,key)
+        #update dictionary
+        MyAddressBook[key] = (address_E.get(), mobile_E.get(), email_E.get(), birthday_E.get())
+        clear_all()
+            
+def display(event):
+    newWindow = Toplevel(root)
+    index = book_list.curselection()
+    content = ""
+    if index:
+        key = book_list.get(index)
+        content = "NAME : " + key + "\n\n"
+        details = MyAddressBook[key]
+        content += "ADDRESS : " + details[0] + "\n"
+        content += "MOBILE : " + details[1] + "\n"
+        content += "EMAIL : " + details[2] + "\n"
+        content += "BIRTHDAY : " + details + "\n"
+    
+    lbl = Label(newWindow)
+    lbl.grid(row = 0, column = 0)
+    lbl.configure(text = content, bacground = "Pink")
+
+def reset():
+    clear_all()
+    book_list.delete(0, END)
+    MyAddressBook.clear()
+    title.config(text = "My Address Book")
+
+
+
+
+def save():
+    fout = asksaveasfile(defaultextension= ".txt")
+    if fout:
+        print(MyAddressBook, file = fout)
+        reset()
+    else:
+        messagebox.showinfo("Warning", text = "Address Book not saved")
+
+
+
+def edit():
+    clear_all()
+    index = book_list.curselection()
+    if index:
+        name_E.insert(0, book_list.get(index))
+        details = MyAddressBook[name_E.get()]
+        address_E.insert(0,details[0])
+        mobile_E.insert(0, details[1])
+        email_E.insert(0, index[2])
+        birthday_E.insert(0, index[3])
+    
+    else:
+        messagebox.showinfo("Error", "Select a Name")
+
+def open_file():
+    global MyAddressBook
+    reset()
+    fin = askopenfile(title = "Open File")
+    if fin:
+        with open(fin.name, "r") as file:
+            MyAddressBook = json.load(fin)
+        for key in MyAddressBook.keys():
+            book_list.insert(END, key)
+        title.config(text = os.path.basename(fin.name))
+    
+    else:
+        messagebox.showinfo("Error", "no address book opened")
+
+
+
+# GUI
 
 title = Label(root, text = "My address book", background = "White")
 book_list = Listbox(root)
 
 open_b = Button(root, text = "Open", command = None)
 delete_b = Button(root, text = "Delete", command = None)
-save_b = Button(root, text = "Save", command = None)
+save_b = Button(root, text = "Save", command = save)
 Edit_b = Button(root, text = "Edit", command = None)
-update = Button(root, text = "Update", command = None)
+update_b = Button(root, text = "Update", command = None)
 
 name_l = Label(root, text = "Name:", background="White")
 address_l = Label(root, text = "Address:", background="White")
 mobile_l = Label(root, text = "Mobile:", background="White")
-phone_l = Label(root, text = "Phone:", background="White")
+email_l = Label(root, text = "Phone:", background="White")
 birthday_l = Label(root, text = "Birthday:", background="White")
 
 name_E = Entry(root, background="White", width = 15)
 address_E = Entry(root, background="White", width = 15)
 mobile_E = Entry(root, background="White", width = 15)
-phone_E = Entry(root, background="White", width = 15)
+email_E = Entry(root, background="White", width = 15)
 birthday_E = Entry(root, background="White", width = 15)
 
 title.grid(column = 1, row = 1, pady = 2, padx = 2)
@@ -36,16 +131,17 @@ open_b.grid(column = 3, row = 1, pady = 2, padx = 2)
 name_l.grid(column = 3, row = 2, pady = 2, padx = 2)
 address_l.grid(column = 3, row = 3, pady = 2, padx = 2)
 mobile_l.grid(column = 3, row = 4, pady = 2, padx = 2)
-phone_l.grid(column = 3, row = 6, pady = 2, padx = 2)
+email_l.grid(column = 3, row = 6, pady = 2, padx = 2)
 birthday_l.grid(column = 3, row = 7, pady = 2, padx = 2)
 
 save_b.grid(column = 3, row = 8, pady = 2, padx = 2)
-update.grid(column = 2, row = 9)
+update_b.grid(column = 2, row = 9)
 
-name_E.grid(column = 3, row = 2, pady = 2, padx = 2)
-address_E.grid(column = 3, row = 3, pady = 2, padx = 2)
-mobile_l.grid(column = 3, row = 4, pady = 2, padx = 2)
-phone_l.grid(column = 3, row = 6, pady = 2, padx = 2)
-birthday_l.grid(column = 3, row = 7, pady = 2, padx = 2)
+name_E.grid(column = 4, row = 2, pady = 2, padx = 2)
+address_E.grid(column = 4, row = 3, pady = 2, padx = 2)
+mobile_E.grid(column = 4, row = 4, pady = 2, padx = 2)
+email_E.grid(column = 4, row = 6, pady = 2, padx = 2)
+birthday_E.grid(column = 4, row = 7, pady = 2, padx = 2)
+
 
 root.mainloop()
