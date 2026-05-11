@@ -1,0 +1,36 @@
+from tkinter import *
+import random
+from tkinter import messagebox
+import tkinter
+
+root = tkinter.Tk()
+
+answers = ["apple", "recieve", "pen", "veer", 
+           "pear", "yellow", "computer", "paper", 
+           "books", "ajar", "model"]
+
+words = ["plpea", "cievere", "epn", "rvee",
+          "pare", "lowyel", "cotmerup", "aeppr",
+          "kobos", "jaar", "doeml"]
+
+num = random.randrange(0, len(words), 1)
+
+c = 0# correct answer count
+d = 0# total question count
+s = ""# score string
+l = Label(root)# displays score
+
+
+
+
+# GUI
+
+root.geometry("500,500")
+root.title("jumbled word game")
+root.configure(background = "black")
+
+main_label = Label(root,text = "Welcome to the jumbled word game", font = ("ariel", 10, "itallic"))
+q = Label(root, text = random.choice(words))
+
+
+
