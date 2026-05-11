@@ -12,6 +12,7 @@ root.title("Address Book")
 
 MyAddressBook = {}
 # clear the textbox on the main screen
+
 def clear_all():
     name_E.delete(0, END)
     address_E.delete(0,END)
@@ -96,18 +97,25 @@ def open_file():
     else:
         messagebox.showinfo("Error", "no address book opened")
 
-
+def delete():
+    index = book_list.curselection()
+    if index:
+        del MyAddressBook[book_list.get(index)]
+        book_list.delete(index)
+        clear_all()
+    else:
+        messagebox.showinfo("Error", "Select a name")
 
 # GUI
 
 title = Label(root, text = "My address book", background = "White")
 book_list = Listbox(root)
 
-open_b = Button(root, text = "Open", command = None)
-delete_b = Button(root, text = "Delete", command = None)
+open_b = Button(root, text = "Open", command = open_file)
+delete_b = Button(root, text = "Delete", command = delete)
 save_b = Button(root, text = "Save", command = save)
-Edit_b = Button(root, text = "Edit", command = None)
-update_b = Button(root, text = "Update", command = None)
+Edit_b = Button(root, text = "Edit", command = edit)
+update_b = Button(root, text = "Update", command = update)
 
 name_l = Label(root, text = "Name:", background="White")
 address_l = Label(root, text = "Address:", background="White")
