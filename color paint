@@ -1,0 +1,29 @@
+from tkinter import *
+from tkinter.colorchooser import askcolor
+
+class Paint(object):
+    DEFAULT_color = "Blue"
+    def __init__(self):
+
+        self.root = Tk()
+        self.root.config(bg = "yellow")
+        self.root.geometry("400x400")
+
+        self.pen_button = Button(self.root, text = "Pen", 
+                                 command=NONE, bg = "Green", bd = 4,
+                                 fg = "pink")
+        self.pen_button.grid(row = 1, column = 1, padx = 5, pady = 5)
+
+        self.brush_button = Button(self.root, text = "Brush", bg = "Green",
+                                   fg = "pink", bd = 4)
+        self.brush_button.grid(row = 1, column = 2, padx =5, pady = 5)
+
+        self.root.mainloop()
+
+
+
+
+
+
+if __name__ == "__main__":
+    Paint()
