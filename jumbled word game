@@ -20,17 +20,64 @@ d = 0# total question count
 s = ""# score string
 l = Label(root)# displays score
 
+def reset():
+    global answers, words, num
+    num = random.randrange(0, len(words), 1)
+    question.config(text = words[num])
+    answer.delete(0, END)
+
+def default():
+    global answers, words, num
+    question.config(text = words[num])
+
+def check_ans():
+    global answers, words, num, c, d, s, l
+    d = int(d)+1
+    var = answer.get()
+    if var == answers[num]:
+        c = int(c) + 1
+        messagebox.showinfo("Congratulations", "That is correct")
+    
+    else:
+        messagebox.showinfo("Sorry", "that is incorrect")
+
+    s = "Score: " + str(c) + "/" + str(d)
+
+    l.forget()
+    l = Label(root, font = ("verdana", 20),text = s, 
+              background="black", foreground="white")
+    l.pack(side = LEFT)
+    reset()
 
 
 
 # GUI
 
-root.geometry("500,500")
+root.geometry("500x500")
 root.title("jumbled word game")
 root.configure(background = "black")
 
-main_label = Label(root,text = "Welcome to the jumbled word game", font = ("ariel", 10, "itallic"))
-q = Label(root, text = random.choice(words))
+main_label = Label(root,text = "Welcome to the jumbled word game", 
+                   font = ("ariel", 10, "italic"), background="black"
+                   , foreground = "white")
+question = Label(root, text = random.choice(words), background = "black"
+                 , foreground="white")
+
+main_label.pack(side = TOP, pady = 5)
+question.pack(side = TOP, pady = 5)
+
+ans = StringVar()
+answer = Entry(root, font = ("verdana", 20), textvariable=ans)
+
+answer.pack(side = TOP, pady = 5)
+
+check = Button(root, text = "check", foreground = "Red", command = check_ans)
+reset_b = Button(root, text = "reset",background="grey",  foreground = "green", command = reset)
+
+check.pack(side = TOP, pady = 5)
+reset_b.pack(side = TOP, pady = 5)
 
 
+default()
 
+root.mainloop()
