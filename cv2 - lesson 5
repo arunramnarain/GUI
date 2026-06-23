@@ -1,0 +1,14 @@
+import cv2
+# reading the image
+img = cv2.imread("tomato_image.png", cv2.IMREAD_COLOR)
+cv2.imshow("Image", img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+img = cv2.imread("tomato_image.png", cv2.IMREAD_COLOR)
+# to resize the image
+resized = cv2.resize(img, (400, 300))
+cv2.imshow("Reduced image", resized)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
