@@ -1,0 +1,28 @@
+import cv2
+
+img = cv2.imread("pikachu.png", cv2.IMREAD_COLOR)
+cv2.imshow("Pikachu",img)
+cv2.waitKey(0)# wait key holds the window so it only closes on the x in the top rigty coner
+cv2.destroyAllWindows()
+
+# display an image in grayscale
+img_2 = cv2.imread("pikachu.png", 0)
+cv2.imshow("Pikachu in grayscale", img_2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+img_3 = cv2.imread("pikachu.png", 1)
+B,G,R = cv2.split(img_3)
+cv2.imshow("Pikachu in colour", img_3)
+cv2.waitKey(0)
+
+cv2.imshow("Blue Saturation Image", B)
+cv2.waitKey(0)
+
+cv2.imshow("Green Saturation Image", G)
+cv2.waitKey(0)
+
+cv2.imshow("Red Saturation Image", R)
+cv2.waitKey(0)
+
+cv2.destroyAllWindows()
